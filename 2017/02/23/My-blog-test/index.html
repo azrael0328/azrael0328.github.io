@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="Powershell弹出窗口的几种方式"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Azrael"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://example.com"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Azrael" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Azrael</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.dark.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">Powershell弹出窗口的几种方式</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/<your-github-username>">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:<your-email-address>">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By John Doe</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2017-02-23</span>
+            <span class="time">14:54:12</span>
+          </span>
+          
+          <!--  Categories  -->
+            <span class="categories info">Under 
+
+<a href="/categories/PowerShell/">PowerShell</a>
+</span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/Windows/">#Windows</a> <a class="tag" href="/tags/Coding/">#Coding</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>本来这篇文章应该是上午就写完的，结果，不得不承认自己有点懒，对最近手头上做的项目做了些总结，Powershell开发运维，也做了一段时间了，今天就来说说那些简单的GUI的编程运维，首先从弹出窗口说起吧。弹出窗口就自己在写PS GUI代码是经常用到的有3种方式，wscript方式，Forms方式，VB方式，先说说Wscript方式，这种方式最简单，也最简陋，只需要两行代码就可以简单做出弹出窗口。</p>
+<span id="more"></span>
+<h4 id="Wscript方式："><a href="#Wscript方式：" class="headerlink" title="Wscript方式："></a>Wscript方式：</h4><p>function Read-MessageBoxDialog<br>{<br>    $PopUpWin &#x3D; new-object -comobject wscript.shell<br>    $PopUpWin.popup(“Hello World”)<br>}<br>Read-MessageBoxDialog<br><img src="/../images/PowershellPrompt/Wscript%E6%96%B9%E5%BC%8F.png" alt="图片描述"></p>
+<h4 id="Forms方式"><a href="#Forms方式" class="headerlink" title="Forms方式:"></a>Forms方式:</h4><p>相对于Wscript方式来说，这种方式写的代码比较多但是呈现的样式比较亲切<br>function Read-MessageBoxDialog<br>{<br>    param ([string]$Message,<br>        [string]$WindowTitle,<br>        [System.Windows.Forms.MessageBoxButtons]$Buttons &#x3D; [System.Windows.Forms.MessageBoxButtons]::OK,<br>        [System.Windows.Forms.MessageBoxIcon]$Icon &#x3D; [System.Windows.Forms.MessageBoxIcon]::None)<br>    Add-Type -AssemblyName System.Windows.Forms<br>    return [System.Windows.Forms.MessageBox]::Show($Message, $WindowTitle, $Buttons, $Icon)<br>}<br>Read-MessageBoxDialog -Message “Hello World” -WindowTitle “CustomTitleHere” -Buttons OK -Icon Information<br><img src="/../images/PowershellPrompt/Form.png" alt="alt text"></p>
+<h4 id="VB方式"><a href="#VB方式" class="headerlink" title="VB方式:"></a>VB方式:</h4><p>最后一种方式就是VB方式，这种方式是在PS中调用VB的方式来进行弹出窗口，样式与Forms基本类似<br>function Read-MessageBoxDialog<br>{<br>    param ([string]$Message,[string]$WindowTitle)<br>    Add-Type -AssemblyName Microsoft.VisualBasic<br>    return [Microsoft.VisualBasic.Interaction]::MsgBox($Message,’Information’,$WindowTitle)<br>}<br>Read-MessageBoxDialog -Message “Hello World” -WindowTitle “CustomTitleHere”<br><img src="/../images/PowershellPrompt/VB.png" alt="alt text"></p>
+<p>最后可以看出VB的样式与Forms样式一样，但是代码要比Forms的少很多，如果只是提示窗口，建议用VB形式，如果想让提示窗口显示为Information形式，并且OK与Cancel按钮同时存在就将Forms方式中的Buttons属性设置为 OKCancel<br>function Read-MessageBoxDialog<br>{<br>    param ([string]$Message,<br>        [string]$WindowTitle,<br>        [System.Windows.Forms.MessageBoxButtons]$Buttons &#x3D; [System.Windows.Forms.MessageBoxButtons]::OK,<br>        [System.Windows.Forms.MessageBoxIcon]$Icon &#x3D; [System.Windows.Forms.MessageBoxIcon]::None)<br>    Add-Type -AssemblyName System.Windows.Forms<br>    return [System.Windows.Forms.MessageBox]::Show($Message, $WindowTitle, $Buttons, $Icon)<br>}<br>Read-MessageBoxDialog -Message “Hello World” -WindowTitle “CustomTitleHere” -Buttons OKCancel -Icon Information<br><img src="/../images/PowershellPrompt/OKCancel.png" alt="alt text"></p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+
