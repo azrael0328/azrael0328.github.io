@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="John Doe">
   <!-- Open Graph Data -->
-  <meta property="og:title" content="Powershell弹出窗口的几种方式"/>
+  <meta property="og:title" content="Docker Cli常用命令"/>
   <meta property="og:description" content="" />
   <meta property="og:site_name" content="Azrael"/>
   <meta property="og:type" content="article" />
@@ -47,7 +47,7 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="page-title with-background-image">
-          <p class="title">Powershell弹出窗口的几种方式</p>
+          <p class="title">Docker Cli常用命令</p>
           <p class="subtitle"></p>
         </div>
         <div class="site-menu with-background-image">
@@ -103,14 +103,14 @@
           
           <!-- Date -->
           <span class="date-time info">On
-            <span class="date">2017-02-23</span>
-            <span class="time">14:10:41</span>
+            <span class="date">2024-04-14</span>
+            <span class="time">14:10:40</span>
           </span>
           
           <!--  Categories  -->
             <span class="categories info">Under 
 
-<a href="/categories/PowerShell/">PowerShell</a>
+<a href="/categories/Docker/">Docker</a>
 </span>
           
         </div>
@@ -119,19 +119,30 @@
           <div class="post-tags text-muted">
             Tags: 
 
-<a class="tag" href="/tags/Windows/">#Windows</a> <a class="tag" href="/tags/Coding/">#Coding</a>
+<a class="tag" href="/tags/Docker/">#Docker</a> <a class="tag" href="/tags/Container/">#Container</a> <a class="tag" href="/tags/K8S/">#K8S</a>
 
 
           </div>
         
         <!-- Post Main Content -->
         <div class="post-content">
-          <p>本来这篇文章应该是上午就写完的，结果，不得不承认自己有点懒，对最近手头上做的项目做了些总结，Powershell开发运维，也做了一段时间了，今天就来说说那些简单的GUI的编程运维，首先从弹出窗口说起吧。弹出窗口就自己在写PS GUI代码是经常用到的有3种方式，wscript方式，Forms方式，VB方式，先说说Wscript方式，这种方式最简单，也最简陋，只需要两行代码就可以简单做出弹出窗口。</p>
+          <p>最近重新接手了一个容器的项目，让我也重新复习了一遍对容器的操作，由于长时间没有接触Docker和容器了，基本已经是忘光光了，然而这次重新复习了一遍之后，发现容器还真是很方便。由于现在接触的大部分运维项目当中，都是以windows为基础，所以现在windows以及windows原生的powershell很熟悉，以至于linux和bash的基本操作还需要去看以前的一些笔记才能回忆起来。</p>
 <span id="more"></span>
-<h4 id="Wscript方式："><a href="#Wscript方式：" class="headerlink" title="Wscript方式："></a>Wscript方式：</h4><p>function Read-MessageBoxDialog<br>{<br>    $PopUpWin &#x3D; new-object -comobject wscript.shell<br>    $PopUpWin.popup(“Hello World”)<br>}<br>Read-MessageBoxDialog<br><img src="/../images/PowershellPrompt/Wscript%E6%96%B9%E5%BC%8F.png" alt="图片描述"></p>
-<h4 id="Forms方式"><a href="#Forms方式" class="headerlink" title="Forms方式:"></a>Forms方式:</h4><p>相对于Wscript方式来说，这种方式写的代码比较多但是呈现的样式比较亲切<br>function Read-MessageBoxDialog<br>{<br>    param ([string]$Message,<br>        [string]$WindowTitle,<br>        [System.Windows.Forms.MessageBoxButtons]$Buttons &#x3D; [System.Windows.Forms.MessageBoxButtons]::OK,<br>        [System.Windows.Forms.MessageBoxIcon]$Icon &#x3D; [System.Windows.Forms.MessageBoxIcon]::None)<br>    Add-Type -AssemblyName System.Windows.Forms<br>    return [System.Windows.Forms.MessageBox]::Show($Message, $WindowTitle, $Buttons, $Icon)<br>}<br>Read-MessageBoxDialog -Message “Hello World” -WindowTitle “CustomTitleHere” -Buttons OK -Icon Information<br><img src="/../images/PowershellPrompt/Form.png" alt="alt text"></p>
-<h4 id="VB方式"><a href="#VB方式" class="headerlink" title="VB方式:"></a>VB方式:</h4><p>最后一种方式就是VB方式，这种方式是在PS中调用VB的方式来进行弹出窗口，样式与Forms基本类似<br>function Read-MessageBoxDialog<br>{<br>    param ([string]$Message,[string]$WindowTitle)<br>    Add-Type -AssemblyName Microsoft.VisualBasic<br>    return [Microsoft.VisualBasic.Interaction]::MsgBox($Message,’Information’,$WindowTitle)<br>}<br>Read-MessageBoxDialog -Message “Hello World” -WindowTitle “CustomTitleHere”<br><img src="/../images/PowershellPrompt/VB.png" alt="alt text"></p>
-<p>最后可以看出VB的样式与Forms样式一样，但是代码要比Forms的少很多，如果只是提示窗口，建议用VB形式，如果想让提示窗口显示为Information形式，并且OK与Cancel按钮同时存在就将Forms方式中的Buttons属性设置为 OKCancel<br>function Read-MessageBoxDialog<br>{<br>    param ([string]$Message,<br>        [string]$WindowTitle,<br>        [System.Windows.Forms.MessageBoxButtons]$Buttons &#x3D; [System.Windows.Forms.MessageBoxButtons]::OK,<br>        [System.Windows.Forms.MessageBoxIcon]$Icon &#x3D; [System.Windows.Forms.MessageBoxIcon]::None)<br>    Add-Type -AssemblyName System.Windows.Forms<br>    return [System.Windows.Forms.MessageBox]::Show($Message, $WindowTitle, $Buttons, $Icon)<br>}<br>Read-MessageBoxDialog -Message “Hello World” -WindowTitle “CustomTitleHere” -Buttons OKCancel -Icon Information<br><img src="/../images/PowershellPrompt/OKCancel.png" alt="alt text"></p>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><p>这次项目架构是需要将本地容器迁移到Azure上，所以ACR是必不可少的，所以自己搭建了本地测试环境，测试环境主要使用的是Hyper-V作为底层虚拟化，虚拟出了一台虚拟机，并且该虚拟机启用了嵌套虚拟化，虚拟机系统使用的是Windows 10，然后安装了Docker Desktop用于容器本地的测试，容器的镜像通过本地Dockerfile进行制作，本地容器测试成功之后，打标签并且上传到ACR，然后使用ACI进行容器的发布。</p>
+<h2 id="基本命令总结"><a href="#基本命令总结" class="headerlink" title="基本命令总结"></a>基本命令总结</h2><p>这几天用的最多的命令如下</p>
+<ul>
+<li>docker build -t “imagename” c:\Directory of Dockerfile 根据Dockerfile所在的路径制作镜像</li>
+<li>docker images 列出image镜像文件</li>
+<li>docker image ls 结果输出同上</li>
+<li>docker run –name hexo -dit -v C:\Users\xxxx\DockerProject\Hexo\blogdata:&#x2F;usr&#x2F;blog -p 4000:4000 –network bridge hexoblog 根据镜像运行一个带目录映射的容器，并且在后台运行，具体参数可以参考官方说明</li>
+<li>docker exec -it nginx sh 进入名为nginx容器的系统中，进入后相当于对于容器系统进行操作</li>
+<li>docker network ls 列出容器所使用的网络，这种命令，官方有说明</li>
+<li>docker ps 列出正在运行的容器</li>
+<li>docker ps -a 列出全部容器，运行中的，未运行的全部列出</li>
+<li>docker inspect hexo 列出容器的所有配置</li>
+<li>docker inspect hexo | ConvertFrom-Json 列出指定容器的配置，并从Json文件转换成powershell格式属性，因为ConvertFrom-Json属于powershell语言，所以可以使用在windows平台，类似linux中的 | grep之类的</li>
+<li>(docker inspect hexo | ConvertFrom-Json).NetworkSettings 列出指定容器的网络设置属性，方法也是使用的powershell</li>
+</ul>
 
         </div>
       </div>
