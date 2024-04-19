@@ -104,7 +104,7 @@
           <!-- Date -->
           <span class="date-time info">On
             <span class="date">2024-04-14</span>
-            <span class="time">14:14:13</span>
+            <span class="time">06:55:00</span>
           </span>
           
           <!--  Categories  -->
@@ -142,6 +142,9 @@
 <li>docker inspect hexo 列出容器的所有配置</li>
 <li>docker inspect hexo | ConvertFrom-Json 列出指定容器的配置，并从Json文件转换成powershell格式属性，因为ConvertFrom-Json属于powershell语言，所以可以使用在windows平台，类似linux中的 | grep之类的</li>
 <li>(docker inspect hexo | ConvertFrom-Json).NetworkSettings 列出指定容器的网络设置属性，方法也是使用的powershell</li>
+<li>(docker network inspect bridge | ConvertFrom-Json).Containers | Fl * 也是列出容器的一些信息方式，包括网络ip</li>
+<li>docker save -o d:\imagebackup\imagename.tar.gz hexo:latest 将hexo:latest镜像保存到D盘下的imagebackup目录，并且压缩，如果去掉.gz就是不压缩，只保存为一个tar文件</li>
+<li>docker load -i d:\imagebackup\imagename.tar.gz 导入本地镜像到docker中</li>
 </ul>
 
         </div>
